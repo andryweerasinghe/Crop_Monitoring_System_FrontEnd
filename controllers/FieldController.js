@@ -59,4 +59,24 @@ $(document).ready(function () {
             codeError = true;
         }
     }
+    function validateName(){
+        var isValidFieldName = new RegExp("^[A-Za-z0-9 ]{5,50}$");
+        if ($('#fieldName').val() === "") {
+            $("#fieldName").css({"border-color": "red"});
+            $("#fieldNameCheck").empty();
+            $("#fieldNameCheck").append("Field Name missing");
+            nameError = false;
+            return false;
+        } else if (!isValidFieldName.test($('#fieldName').val())) {
+            $("#fieldName").css({"border-color": "red"});
+            $("#fieldNameCheck").empty();
+            $("#fieldNameCheck").append("Invalid Field Name");
+            nameError = false;
+            return false;
+        } else {
+            $("#fieldName").css({"border-color": "green"});
+            $("#fieldNameCheck").empty();
+            nameError = true;
+        }
+    }
 });
