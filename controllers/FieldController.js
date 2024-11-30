@@ -79,4 +79,24 @@ $(document).ready(function () {
             nameError = true;
         }
     }
+    function validateLocation(){
+        var isValidFieldLocation = new RegExp("^[A-Za-z0-9 ,.-]{5,100}$");
+        if ($('#fieldLocation').val() === "") {
+            $("#fieldLocation").css({"border-color": "red"});
+            $("#fieldLocationCheck").empty();
+            $("#fieldLocationCheck").append("Field Location missing");
+            locationError = false;
+            return false;
+        } else if (!isValidFieldLocation.test($('#fieldLocation').val())) {
+            $("#fieldLocation").css({"border-color": "red"});
+            $("#fieldLocationCheck").empty();
+            $("#fieldLocationCheck").append("Invalid Field Location");
+            locationError = false;
+            return false;
+        } else {
+            $("#fieldLocation").css({"border-color": "green"});
+            $("#fieldLocationCheck").empty();
+            locationError = true;
+        }
+    }
 });
