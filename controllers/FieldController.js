@@ -99,4 +99,24 @@ $(document).ready(function () {
             locationError = true;
         }
     }
+    function validateSize(){
+        var isValidFieldSize = new RegExp("^[0-9]{1,5}(\\.[0-9]{1,2})?$");
+        if ($('#fieldSize').val() === "") {
+            $("#fieldSize").css({"border-color": "red"});
+            $("#fieldSizeCheck").empty();
+            $("#fieldSizeCheck").append("Field Size missing");
+            sizeError = false;
+            return false;
+        } else if (!isValidFieldSize.test($('#fieldSize').val())) {
+            $("#fieldSize").css({"border-color": "red"});
+            $("#fieldSizeCheck").empty();
+            $("#fieldSizeCheck").append("Invalid Field Size");
+            sizeError = false;
+            return false;
+        } else {
+            $("#fieldSize").css({"border-color": "green"});
+            $("#fieldSizeCheck").empty();
+            sizeError = true;
+        }
+    }
 });
