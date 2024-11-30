@@ -265,4 +265,31 @@ $(document).ready(function () {
             console.log("Image 2:", image2 ? image2.name : "No file selected");
         }
     });
+    $("#delete-field-btn").click(function () {
+        var fieldCode = $("#fieldCode").val();
+
+        if (!fieldCode) {
+            alert("Please enter a field code to delete.");
+            return;
+        }
+
+        var settings = {
+            "url": "http://localhost:4010/green-shadow/api/v1/fields/F002",
+            "method": "DELETE",
+            "timeout": 0,
+        };
+
+        $.ajax(settings)
+            .done(function (response) {
+                alert("Field deleted successfully!");
+                console.log("Response Data:", response);
+                // Optionally refresh the table or UI
+                loadTableField(); // Call your function to reload the table
+            })
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                console.error("Error:", textStatus, errorThrown);
+                alert("Failed to delete the field. Please try again.");
+            });
+
+    });
 });
