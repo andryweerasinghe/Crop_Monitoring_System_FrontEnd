@@ -192,4 +192,77 @@ $(document).ready(function () {
             }
         });
     });
+    // Add a button to trigger the collection of data
+    $("#add-field-btn").click(function () {
+        validateCode()
+        validateName()
+        validateLocation()
+        validateSize()
+        validateImage01()
+        validateImage02()
+        if (codeError === true && nameError === true && locationError === true && sizeError === true && image1Error === true && image2Error === true) {
+
+            var fieldCode = $("#fieldCode").val();
+            var fieldName = $("#fieldName").val();
+            var fieldLocation = $("#fieldLocation").val();
+            var fieldSize = $("#fieldSize").val();
+
+            const image1 = $("#inputGroupFile01").prop('files')[0];
+            const image2 = $("#inputGroupFile02").prop('files')[0];
+
+            $.ajax({
+                url: "http://localhost:4010/green-shadow/api/v1/fields/"+fieldCode,
+                type: "GET",
+                headers: {"Content-Type": "application/json"},
+                success: (res) => {
+
+                    if (res && JSON.stringify(res).toLowerCase().includes("not found")) {
+                        var form = new FormData();
+                        form.append("fieldCode", fieldCode);
+                        form.append("fieldName", fieldName);
+                        form.append("location", fieldLocation);
+                        form.append("extent", fieldSize);
+
+                        if (image1) {
+                            form.append("fieldImage1", image1, image1.name);
+                        }
+                        if (image2) {
+                            form.append("fieldImage2", image2, image2.name);
+                        }
+
+                        var settings = {
+                            "url": "http://localhost:4010/green-shadow/api/v1/fields",
+                            "method": "POST",
+                            "timeout": 0,
+                            "processData": false,
+                            "mimeType": "multipart/form-data",
+                            "contentType": false,
+                            "data": form
+                        };
+                        $.ajax(settings).done(function (response) {
+                            loadTableField();
+                            alert("Successfully added the field!");
+                            console.log("Response:", response);
+                        }).fail(function (error) {
+                            alert("Failed to add the field!");
+                            console.error("Error:", error);
+                        });
+                    } else {
+                        alert("Field code already exists");
+                    }
+                },
+                error: (res) => {
+                    console.error(res);
+                }
+            });
+
+            // Debug logs
+            console.log("Field Code:", fieldCode);
+            console.log("Field Name:", fieldName);
+            console.log("Location:", fieldLocation);
+            console.log("Extent Size:", fieldSize);
+            console.log("Image 1:", image1 ? image1.name : "No file selected");
+            console.log("Image 2:", image2 ? image2.name : "No file selected");
+        }
+    });
 });
