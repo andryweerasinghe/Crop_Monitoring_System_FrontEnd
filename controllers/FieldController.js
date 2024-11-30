@@ -175,4 +175,21 @@ $(document).ready(function () {
         console.log(fieldLocation);
         console.log(fieldExtent);
     });
+    $('#search-field-btn').on('click', () => {
+        let fieldId = $('#fieldCode').val();
+        $.ajax({
+            url: "http://localhost:4010/green-shadow/api/v1/fields/"+fieldId,
+            type: "GET",
+            headers: {"Content-Type": "application/json"},
+            success: (res) => {
+                console.log(JSON.stringify(res));
+                $('#fieldName').val(res.fieldName);
+                $('#fieldLocation').val(res.location);
+                $('#fieldSize').val(res.extent);
+            },
+            error: (res) => {
+                console.error(res);
+            }
+        });
+    });
 });
