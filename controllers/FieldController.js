@@ -153,4 +153,26 @@ $(document).ready(function () {
             image2Error = true;
         }
     }
+    $("#field-table").on('click', 'tr', function () {
+        recordIndex = $(this).index();
+        console.log(recordIndex);
+
+        // Assuming your table cells (td) are in the same order as: ID, Name, Address, Phone
+        let fieldId = $(this).find("td:eq(0)").text();  // first cell for field ID
+        let fieldName = $(this).find("td:eq(1)").text();  // second cell for field Name
+        let fieldLocation = $(this).find("td:eq(2)").text();  // third cell for field Address
+        let fieldExtent = $(this).find("td:eq(3)").text();  // fourth cell for field Phone
+
+        // Setting the values in the form fields
+        $("#fieldCode").val(fieldId);
+        $("#fieldName").val(fieldName);
+        $("#fieldLocation").val(fieldLocation);
+        $("#fieldExtent").val(fieldExtent);
+
+        // Debugging logs
+        console.log(fieldId);
+        console.log(fieldName);
+        console.log(fieldLocation);
+        console.log(fieldExtent);
+    });
 });
