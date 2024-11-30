@@ -119,4 +119,38 @@ $(document).ready(function () {
             sizeError = true;
         }
     }
+    function validateSize(){
+        var isValidFieldSize = new RegExp("^[0-9]{1,5}(\\.[0-9]{1,2})?$");
+        if ($('#fieldSize').val() === "") {
+            $("#fieldSize").css({"border-color": "red"});
+            $("#fieldSizeCheck").empty();
+            $("#fieldSizeCheck").append("Field Size missing");
+            sizeError = false;
+            return false;
+        } else if (!isValidFieldSize.test($('#fieldSize').val())) {
+            $("#fieldSize").css({"border-color": "red"});
+            $("#fieldSizeCheck").empty();
+            $("#fieldSizeCheck").append("Invalid Field Size");
+            sizeError = false;
+            return false;
+        } else {
+            $("#fieldSize").css({"border-color": "green"});
+            $("#fieldSizeCheck").empty();
+            sizeError = true;
+        }
+    }
+    function validateImage02(){
+        const image2 = $("#inputGroupFile02").prop('files')[0];
+        if (!image2) {
+            $("#inputGroupFile02").css({"border-color": "red"});
+            $("#fieldImage02Check").empty();
+            $("#fieldImage02Check").append("Field Image missing");
+            image2Error = false;
+            return false;
+        } else {
+            $("#inputGroupFile02").css({"border-color": "green"});
+            $("#fieldImage02Check").empty();
+            image2Error = true;
+        }
+    }
 });
