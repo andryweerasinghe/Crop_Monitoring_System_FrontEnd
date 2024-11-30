@@ -39,4 +39,24 @@ $(document).ready(function () {
             }
         });
     }
+    function validateCode(){
+        var isValidFieldCode = new RegExp("^F\\d{3}$");
+        if ($('#fieldCode').val() === "") {
+            $("#fieldCode").css({"border-color": "red"});
+            $("#fieldIdCheck").empty();
+            $("#fieldIdCheck").append("Field Code missing");
+            codeError = false;
+            return false;
+        } else if (!isValidFieldCode.test($('#fieldCode').val())) {
+            $("#fieldCode").css({"border-color": "red"});
+            $("#fieldIdCheck").empty();
+            $("#fieldIdCheck").append("Invalid Field Code");
+            codeError = false;
+            return false;
+        } else {
+            $("#fieldCode").css({"border-color": "green"});
+            $("#fieldIdCheck").empty();
+            codeError = true;
+        }
+    }
 });
