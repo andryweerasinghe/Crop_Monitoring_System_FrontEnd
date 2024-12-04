@@ -290,7 +290,7 @@ $(document).ready(function () {
                 success: (res) => {
                     if (res && JSON.stringify(res).toLowerCase().includes("not found")) {
                         var form = new FormData();
-                        form.append("cropCode", cropCode);
+                        // form.append("cropCode", cropCode);
                         form.append("cropName", cropCommonName);
                         form.append("cropScientificName", cropScientificName);
                         form.append("cropCategory", cropCategory);

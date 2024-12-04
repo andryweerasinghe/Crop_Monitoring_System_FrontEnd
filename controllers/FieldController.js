@@ -12,7 +12,7 @@ $(document).ready(function () {
     function loadTableField() {
         $('#field-table').empty();
         $.ajax({
-            url: "http://localhost:4010/green-shadow/api/v1/fields",
+            url: "http://localhost:8081/cropMonitoringSystem/api/v1/fields",
             method: "GET",
             success: function (results) {
                 $('#Field-table').empty();
@@ -178,7 +178,7 @@ $(document).ready(function () {
     $('#search-field-btn').on('click', () => {
         let fieldId = $('#fieldCode').val();
         $.ajax({
-            url: "http://localhost:4010/green-shadow/api/v1/fields/"+fieldId,
+            url: "http://localhost:8081/cropMonitoringSystem/api/v1/fields/"+fieldId,
             type: "GET",
             headers: {"Content-Type": "application/json"},
             success: (res) => {
@@ -211,7 +211,7 @@ $(document).ready(function () {
             const image2 = $("#inputGroupFile02").prop('files')[0];
 
             $.ajax({
-                url: "http://localhost:4010/green-shadow/api/v1/fields/"+fieldCode,
+                url: "http://localhost:8081/cropMonitoringSystem/api/v1/fields/"+fieldCode,
                 type: "GET",
                 headers: {"Content-Type": "application/json"},
                 success: (res) => {
@@ -231,7 +231,7 @@ $(document).ready(function () {
                         }
 
                         var settings = {
-                            "url": "http://localhost:4010/green-shadow/api/v1/fields",
+                            "url": "http://localhost:8081/cropMonitoringSystem/api/v1/fields",
                             "method": "POST",
                             "timeout": 0,
                             "processData": false,
@@ -274,7 +274,7 @@ $(document).ready(function () {
         }
 
         var settings = {
-            "url": "http://localhost:4010/green-shadow/api/v1/fields/F002",
+            "url": "http://localhost:8081/cropMonitoringSystem/api/v1/fields" + fieldCode,
             "method": "DELETE",
             "timeout": 0,
         };
@@ -311,7 +311,7 @@ $(document).ready(function () {
             const image2 = $("#inputGroupFile02").prop('files')[0];
 
             $.ajax({
-                url: "http://localhost:4010/green-shadow/api/v1/fields/"+fieldCode,
+                url: "http://localhost:8081/cropMonitoringSystem/api/v1/fields/"+fieldCode,
                 type: "GET",
                 headers: {"Content-Type": "application/json"},
                 success: (res) => {
@@ -334,7 +334,7 @@ $(document).ready(function () {
 
                         // AJAX settings for sending the form data
                         var settings = {
-                            "url": "http://localhost:4010/green-shadow/api/v1/fields",
+                            "url": "http://localhost:8081/cropMonitoringSystem/api/v1/fields",
                             "method": "POST",
                             "timeout": 0,
                             "processData": false,
