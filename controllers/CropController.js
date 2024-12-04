@@ -12,38 +12,38 @@ $(document).ready(function () {
     let seasonError = true;
     let codeFieldError = true;
 
-    function loadTableCrop() {
-        $('#crop-table').empty();
-        console.log("Loading table...");
-
-        $.ajax({
-            url: "http://localhost:8081/cropMonitoringSystem/api/v1/crops/",
-            method: "GET",
-            success: function (results) {
-                $('#crop-table').empty();
-                results.forEach(function (post) {
-                    var record = `<tr>
-                                    <td>${post.code}</td>     
-                                    <td>${post.commonName}</td>
-                                    <td>${post.scientificName}</td>     
-                                    <td>
-                                        <img src="data:image/png;base64,${post.image}" width="100px">
-                                    </td>
-                                    <td>${post.category}</td>
-                                    <td>${post.season}</td>     
-                                    <td>${post.fieldCode}</td>
-                                </tr>`;
-
-                    $('#crop-table').append(record);
-                });
-                $('#cropCount').text(results.length);
-            },
-            error: function (error) {
-                console.log(error);
-                alert("An error occurred while fetching the posts.");
-            }
-        });
-    }
+    // function loadTableCrop() {
+    //     $('#crop-table').empty();
+    //     console.log("Loading table...");
+    //
+    //     $.ajax({
+    //         url: "http://localhost:8081/cropMonitoringSystem/api/v1/crops/",
+    //         method: "GET",
+    //         success: function (results) {
+    //             $('#crop-table').empty();
+    //             results.forEach(function (post) {
+    //                 var record = `<tr>
+    //                                 <td>${post.code}</td>
+    //                                 <td>${post.commonName}</td>
+    //                                 <td>${post.scientificName}</td>
+    //                                 <td>
+    //                                     <img src="data:image/png;base64,${post.image}" width="100px">
+    //                                 </td>
+    //                                 <td>${post.category}</td>
+    //                                 <td>${post.season}</td>
+    //                                 <td>${post.fieldCode}</td>
+    //                             </tr>`;
+    //
+    //                 $('#crop-table').append(record);
+    //             });
+    //             $('#cropCount').text(results.length);
+    //         },
+    //         error: function (error) {
+    //             console.log(error);
+    //             alert("An error occurred while fetching the posts.");
+    //         }
+    //     });
+    // }
 
     function validateCropCode(){
         var isValidCropCode = new RegExp("^C\\d{3}$");
@@ -243,30 +243,31 @@ $(document).ready(function () {
 
     });
 
-    $('#search-crop-btn').on('click', () => {
-        let cropId = $('#cropCode').val();
-        console.log("Searching for crop with ID:", cropId);
-        updateFieldIDs();
-        $.ajax({
-            url: "http://localhost:8081/cropMonitoringSystem/api/v1/crops/"+cropId,
-            type: "GET",
-            headers: {"Content-Type": "application/json"},
-            success: (res) => {
-                console.log(JSON.stringify(res));
-                $('#cropCode').val(res.code);
-                $('#cropCommonName').val(res.commonName);
-                $('#cropScientificName').val(res.scientificName);
-                $('#cropCategory').val(res.category);
-                $('#cropSeason').val(res.season);
-            },
-            error: (res) => {
-                console.error(res);
-            }
-        });
-    });
+    // $('#search-crop-btn').on('click', () => {
+    //     let cropId = $('#cropCode').val();
+    //     console.log("Searching for crop with ID:", cropId);
+    //     updateFieldIDs();
+    //     $.ajax({
+    //         url: "http://localhost:8081/cropMonitoringSystem/api/v1/crops/"+cropId,
+    //         type: "GET",
+    //         headers: {"Content-Type": "application/json"},
+    //         success: (res) => {
+    //             console.log(JSON.stringify(res));
+    //             $('#cropCode').val(res.code);
+    //             $('#cropCommonName').val(res.commonName);
+    //             $('#cropScientificName').val(res.scientificName);
+    //             $('#cropCategory').val(res.category);
+    //             $('#cropSeason').val(res.season);
+    //         },
+    //         error: (res) => {
+    //             console.error(res);
+    //         }
+    //     });
+    // });
 
     // Add a button to trigger the collection of data
     $("#add-crop-btn").click(function () {
+        console.log("clicked");
         validateCropCode()
         validateCommonName()
         validateScientificName()
@@ -339,113 +340,113 @@ $(document).ready(function () {
         }
     });
 
-    $("#delete-crop-btn").click(function () {
-        var cropCode = $("#cropCode").val();
-
-        if (!cropCode) {
-            alert("Please enter a field code to delete.");
-            return;
-        }
-
-        var settings = {
-            "url": "http://localhost:8081/cropMonitoringSystem/api/v1/crops/"+cropCode,
-            "method": "DELETE",
-            "timeout": 0,
-        };
-
-        $.ajax(settings)
-            .done(function (response) {
-                alert("Crop deleted successfully!");
-                console.log("Response Data:", response);
-                // Optionally refresh the table or UI
-                loadTableCrop(); // Call your function to reload the table
-            })
-            .fail(function (jqXHR, textStatus, errorThrown) {
-                console.error("Error:", textStatus, errorThrown);
-                alert("Failed to delete the crop. Please try again.");
-            });
-
-    });
-
-    $("#update-crop-btn").click(function () {
-        validateCropCode()
-        validateCommonName()
-        validateScientificName()
-        validateImage()
-        validateCategory()
-        validateSeason()
-        validateFieldCode()
-        if (codeCropError === true && commonNameError === true && scientificNameError === true && imageError === true && categoryError === true && seasonError === true && codeFieldError === true) {
-            var cropCode = $("#cropCode").val();
-            var cropCommonName = $("#cropCommonName").val();
-            var cropScientificName = $("#cropScientificName").val();
-            var cropImage = $("#cropImage").prop('files')[0];
-            var cropCategory = $("#cropCategory").val();
-            var cropSeason = $("#cropSeason").val();
-            var fieldCode = $("#fieldSelectID option:selected").text();
-
-
-            $.ajax({
-                url: "http://localhost:8081/cropMonitoringSystem/api/v1/crops/"+cropCode,
-                type: "GET",
-                headers: {"Content-Type": "application/json"},
-                success: (res) => {
-
-                    if (res && JSON.stringify(res).toLowerCase().includes("not found")) {
-                        alert("Crop does not exist");
-                    } else {
-                        var form = new FormData();
-                        form.append("cropCode", cropCode);
-                        form.append("cropName", cropCommonName);
-                        form.append("cropScientificName", cropScientificName);
-                        form.append("cropCategory", cropCategory);
-                        form.append("cropSeason", cropSeason);
-                        form.append("fieldCode", fieldCode);
-
-                        if (cropImage) {
-                            form.append("cropImage", cropImage, cropImage.name);
-                        }
-
-                        var settings = {
-                            "url": "http://localhost:8081/cropMonitoringSystem/api/v1/crops/",
-                            "method": "POST",
-                            "timeout": 0,
-                            "processData": false,
-                            "mimeType": "multipart/form-data",
-                            "contentType": false,
-                            "data": form
-                        };
-
-                        $.ajax(settings).done(function (response) {
-                            loadTableCrop();
-                            alert("Successfully added the crop!");
-                            console.log("Response:", response);
-                        }).fail(function (error) {
-                            alert("Failed to add the crop!");
-                            console.error("Error:", error);
-                        });
-                    }
-                },
-                error: (res) => {
-                    console.error(res);
-                }
-            });
-        }
-
-    });
-
-
-    $('#clear-crop-btn').on('click', () => {
-        clearFields();
-    });
-
-    function clearFields() {
-        $('#cropCode').val("");
-        $('#cropCommonName').val("");
-        $('#cropScientificName').val("");
-        $('#cropCategory').val("");
-        $('#cropSeason').val("");
-        $('#fieldSelectID').val("");
-    }
-
+//     $("#delete-crop-btn").click(function () {
+//         var cropCode = $("#cropCode").val();
+//
+//         if (!cropCode) {
+//             alert("Please enter a field code to delete.");
+//             return;
+//         }
+//
+//         var settings = {
+//             "url": "http://localhost:8081/cropMonitoringSystem/api/v1/crops/"+cropCode,
+//             "method": "DELETE",
+//             "timeout": 0,
+//         };
+//
+//         $.ajax(settings)
+//             .done(function (response) {
+//                 alert("Crop deleted successfully!");
+//                 console.log("Response Data:", response);
+//                 // Optionally refresh the table or UI
+//                 loadTableCrop(); // Call your function to reload the table
+//             })
+//             .fail(function (jqXHR, textStatus, errorThrown) {
+//                 console.error("Error:", textStatus, errorThrown);
+//                 alert("Failed to delete the crop. Please try again.");
+//             });
+//
+//     });
+//
+//     $("#update-crop-btn").click(function () {
+//         validateCropCode()
+//         validateCommonName()
+//         validateScientificName()
+//         validateImage()
+//         validateCategory()
+//         validateSeason()
+//         validateFieldCode()
+//         if (codeCropError === true && commonNameError === true && scientificNameError === true && imageError === true && categoryError === true && seasonError === true && codeFieldError === true) {
+//             var cropCode = $("#cropCode").val();
+//             var cropCommonName = $("#cropCommonName").val();
+//             var cropScientificName = $("#cropScientificName").val();
+//             var cropImage = $("#cropImage").prop('files')[0];
+//             var cropCategory = $("#cropCategory").val();
+//             var cropSeason = $("#cropSeason").val();
+//             var fieldCode = $("#fieldSelectID option:selected").text();
+//
+//
+//             $.ajax({
+//                 url: "http://localhost:8081/cropMonitoringSystem/api/v1/crops/"+cropCode,
+//                 type: "GET",
+//                 headers: {"Content-Type": "application/json"},
+//                 success: (res) => {
+//
+//                     if (res && JSON.stringify(res).toLowerCase().includes("not found")) {
+//                         alert("Crop does not exist");
+//                     } else {
+//                         var form = new FormData();
+//                         form.append("cropCode", cropCode);
+//                         form.append("cropName", cropCommonName);
+//                         form.append("cropScientificName", cropScientificName);
+//                         form.append("cropCategory", cropCategory);
+//                         form.append("cropSeason", cropSeason);
+//                         form.append("fieldCode", fieldCode);
+//
+//                         if (cropImage) {
+//                             form.append("cropImage", cropImage, cropImage.name);
+//                         }
+//
+//                         var settings = {
+//                             "url": "http://localhost:8081/cropMonitoringSystem/api/v1/crops/",
+//                             "method": "POST",
+//                             "timeout": 0,
+//                             "processData": false,
+//                             "mimeType": "multipart/form-data",
+//                             "contentType": false,
+//                             "data": form
+//                         };
+//
+//                         $.ajax(settings).done(function (response) {
+//                             loadTableCrop();
+//                             alert("Successfully added the crop!");
+//                             console.log("Response:", response);
+//                         }).fail(function (error) {
+//                             alert("Failed to add the crop!");
+//                             console.error("Error:", error);
+//                         });
+//                     }
+//                 },
+//                 error: (res) => {
+//                     console.error(res);
+//                 }
+//             });
+//         }
+//
+//     });
+//
+//
+//     $('#clear-crop-btn').on('click', () => {
+//         clearFields();
+//     });
+//
+//     function clearFields() {
+//         $('#cropCode').val("");
+//         $('#cropCommonName').val("");
+//         $('#cropScientificName').val("");
+//         $('#cropCategory').val("");
+//         $('#cropSeason').val("");
+//         $('#fieldSelectID').val("");
+//     }
+//
 });
