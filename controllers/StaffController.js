@@ -27,7 +27,7 @@ $(document).ready(function () {
         console.log("Loading table...");
 
         $.ajax({
-            url: "http://localhost:4010/green-shadow/api/v1/staff",
+            url: "http://localhost:8081/cropMonitoringSystem/api/v1/staff",
             method: "GET",
             success: function (results) {
                 $('#staff-table').empty();
@@ -403,7 +403,7 @@ $(document).ready(function () {
 
         // Fetch customer data from the server
         $.ajax({
-            url: "http://localhost:4010/green-shadow/api/v1/fields",
+            url: "http://localhost:8081/cropMonitoringSystem/api/v1/fields",
             type: "GET",
             headers: { "Content-Type": "application/json" },
             success: (res) => {
@@ -490,7 +490,7 @@ $(document).ready(function () {
         let staffId = $('#staffCode').val();
         console.log("Searching for staff with ID:", staffId);
         $.ajax({
-            url: "http://localhost:4010/green-shadow/api/v1/staff/" + staffId,
+            url: "http://localhost:8081/cropMonitoringSystem/api/v1/staff/" + staffId,
             type: "GET",
             headers: { "Content-Type": "application/json" },
             success: (res) => {
@@ -556,7 +556,7 @@ $(document).ready(function () {
             var staffField = $("#staffFieldSelectID option:selected").text();
 
             $.ajax({
-                url: "http://localhost:4010/green-shadow/api/v1/staff/" + staffCode,
+                url: "http://localhost:8081/cropMonitoringSystem/api/v1/staff/" + staffCode,
                 type: "GET",
                 headers: { "Content-Type": "application/json" },
                 success: (res) => {
@@ -581,7 +581,7 @@ $(document).ready(function () {
 
 
                         var settings = {
-                            "url": "http://localhost:4010/green-shadow/api/v1/staff",
+                            "url": "http://localhost:8081/cropMonitoringSystem/api/v1/staff",
                             "method": "POST",
                             "timeout": 0,
                             "processData": false,
@@ -636,7 +636,7 @@ $(document).ready(function () {
         }
 
         var settings = {
-            "url": "http://localhost:4010/green-shadow/api/v1/staff/" + staffCode,
+            "url": "http://localhost:8081/cropMonitoringSystem/api/v1/staff/" + staffCode,
             "method": "DELETE",
             "timeout": 0,
         };
@@ -692,7 +692,7 @@ $(document).ready(function () {
 
 
             $.ajax({
-                url: "http://localhost:4010/green-shadow/api/v1/staff/" + staffCode,
+                url: "http://localhost:8081/cropMonitoringSystem/api/v1/staff/" + staffCode,
                 type: "GET",
                 headers: { "Content-Type": "application/json" },
                 success: (res) => {
@@ -720,7 +720,7 @@ $(document).ready(function () {
 
 
                         var settings = {
-                            "url": "http://localhost:4010/green-shadow/api/v1/staff",
+                            "url": "http://localhost:8081/cropMonitoringSystem/api/v1/staff",
                             "method": "POST",
                             "timeout": 0,
                             "processData": false,

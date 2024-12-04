@@ -17,7 +17,7 @@ $(document).ready(function () {
         console.log("Loading table...");
 
         $.ajax({
-            url: "http://localhost:4010/green-shadow/api/v1/vehicle",
+            url: "http://localhost:8081/cropMonitoringSystem/api/v1/vehicles",
             method: "GET",
             success: function (results) {
                 $('#vehicle-table').empty();
@@ -200,7 +200,7 @@ $(document).ready(function () {
 
         // Fetch customer data from the server
         $.ajax({
-            url: "http://localhost:4010/green-shadow/api/v1/staff",
+            url: "http://localhost:8081/cropMonitoringSystem/api/v1/staff",
             type: "GET",
             headers: { "Content-Type": "application/json" },
             success: (res) => {
@@ -260,7 +260,7 @@ $(document).ready(function () {
         console.log("Searching for vehicle with ID:", vehicleId);
         updateFieldIDs();
         $.ajax({
-            url: "http://localhost:4010/green-shadow/api/v1/vehicle/"+vehicleId,
+            url: "http://localhost:8081/cropMonitoringSystem/api/v1/vehicles/"+vehicleId,
             type: "GET",
             headers: {"Content-Type": "application/json"},
             success: (res) => {
@@ -298,7 +298,7 @@ $(document).ready(function () {
             var vehicleRemarks = $("#vehicleRemarks").val();
 
             $.ajax({
-                url: "http://localhost:4010/green-shadow/api/v1/vehicle/"+vehicleCode,
+                url: "http://localhost:8081/cropMonitoringSystem/api/v1/vehicles/"+vehicleCode,
                 type: "GET",
                 headers: {"Content-Type": "application/json"},
                 success: (res) => {
@@ -313,7 +313,7 @@ $(document).ready(function () {
                         form.append("remarks", vehicleRemarks);
 
                         var settings = {
-                            "url": "http://localhost:4010/green-shadow/api/v1/vehicle",
+                            "url": "http://localhost:8081/cropMonitoringSystem/api/v1/vehicles",
                             "method": "POST",
                             "timeout": 0,
                             "processData": false,
@@ -362,7 +362,7 @@ $(document).ready(function () {
         }
 
         var settings = {
-            "url": "http://localhost:4010/green-shadow/api/v1/vehicle/"+vehicleCode,
+            "url": "http://localhost:8081/cropMonitoringSystem/api/v1/vehicles/"+vehicleCode,
             "method": "DELETE",
             "timeout": 0,
         };
@@ -400,7 +400,7 @@ $(document).ready(function () {
 
 
             $.ajax({
-                url: "http://localhost:4010/green-shadow/api/v1/vehicle/"+vehicleCode,
+                url: "http://localhost:8081/cropMonitoringSystem/api/v1/vehicles/"+vehicleCode,
                 type: "GET",
                 headers: {"Content-Type": "application/json"},
                 success: (res) => {
@@ -418,7 +418,7 @@ $(document).ready(function () {
                         form.append("remarks", vehicleRemarks);
 
                         var settings = {
-                            "url": "http://localhost:4010/green-shadow/api/v1/vehicle",
+                            "url": "http://localhost:8081/cropMonitoringSystem/api/v1/vehicles",
                             "method": "POST",
                             "timeout": 0,
                             "processData": false,
