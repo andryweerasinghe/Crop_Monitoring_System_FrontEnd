@@ -280,6 +280,7 @@ $(document).ready(function () {
 
     // Add a button to trigger the collection of data
     $("#add-vehicle-btn").click(function () {
+        console.log("clicked");
         validateVehicleCode()
         validateLicenseNumber()
         validateVehicleCategory()
