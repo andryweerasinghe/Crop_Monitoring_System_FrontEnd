@@ -66,9 +66,10 @@ $(document).ready(function () {
             dataType: 'json',
             success: (response) => {
                 console.log('Full response:', response);
+                var field = '';
                 for (let i = 0; i < response.length; i++) {
                     if (fieldCode === response[i].fieldCode) {
-                        var field = response[i];
+                        field = response[i];
                         break;
                     }
                 }
@@ -77,7 +78,7 @@ $(document).ready(function () {
                     console.log('Field retrieved successfully:', field);
 
                     $('#txtSearchField').val(field.fieldCode);
-                    $('#txtCropFieldName').val(field.fieldName);
+                    $('#txtCropFieldName').val(field.field_name);
                 } else {
                     console.error('Field not found');
                 }
@@ -163,8 +164,8 @@ $(document).ready(function () {
         cropData.append('fieldCode', fieldCode);
 
         $.ajax({
-            url: 'http://localhost:8081/cropMonitoringSystem/api/v1/crops?cropCode' + cropCode,
-            type: 'PATCH',
+            url: 'http://localhost:8081/cropMonitoringSystem/api/v1/crops/' + cropCode,
+            type: 'PUT',
             data: cropData,
             mimeType: 'multipart/form-data',
             contentType: false,
@@ -191,7 +192,7 @@ $(document).ready(function () {
         var fieldCode = $('#txtSearchField').val();
 
         $.ajax({
-            url: 'http://localhost:8081/cropMonitoringSystem/api/v1/crops?cropCode' + cropCode,
+            url: 'http://localhost:8081/cropMonitoringSystem/api/v1/crops/' + cropCode,
             type: 'DELETE',
             success: (res) => {
                 console.log(JSON.stringify(res));
@@ -220,12 +221,14 @@ $(document).ready(function () {
             dataType: 'json',
             success: (response) => {
                 console.log('Full response:', response);
-                for (let i = 0; i < response.length; i++) {
-                    if (cropCode === response[i].cropCode) {
-                        var crop = response[i];
-                        break;
-                    }
-                }
+                // for (let i = 0; i < response.length; i++) {
+                //     if (cropCode === response[i].cropCode) {
+                //         var crop = response[i];
+                //         break;
+                //     }
+                // }
+
+                const crop = response.find(item => item.cropCode.toLowerCase() === cropCode);
 
                 if (crop) {
                     $('#txtCropCode').val(crop.cropCode);
