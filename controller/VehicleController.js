@@ -30,16 +30,16 @@ $(document).ready(function(){
                         var staff_id = vehicle.staff_id == null ? "Not Available" : vehicle.staff_id;
                         var vehicleRecord = `
                         <tr>
-                            <td class="v-vehicle_code">${vehicle.vehicle_code}</td>
-                            <td class="v-license_plate">${vehicle.license_plate}</td>
-                            <td class="v-fuel_type">${vehicle.fuel_type}</td>
-                            <td class="v-vehicle_category">${vehicle.vehicle_category}</td>
+                            <td class="v-vehicle_code">${vehicle.vehicleCode}</td>
+                            <td class="v-license_plate">${vehicle.plateNumber}</td>
+                            <td class="v-fuel_type">${vehicle.fuelType}</td>
+                            <td class="v-vehicle_category">${vehicle.category}</td>
                             <td class="v-remarks">${vehicle.remarks}</td>
                             <td class="v-status">${vehicle.status}</td>
-                            <td class="v-staff_id">${staff_id}</td>
-                            <td class="v-first_name">${vehicle.first_name}</td>
+                            <td class="v-staff_id">${staffId}</td>
+                            <td class="v-first_name">${vehicle.firstName}</td>
                             <td class="v-role">${vehicle.role}</td>
-                            <td class="v-phone_no">${vehicle.phone_no}</td>
+                            <td class="v-phone_no">${vehicle.phoneNumber-o}</td>
                             <td class="v-email">${vehicle.email}</td>
                         </tr>`;
                         $('#vehicles-table-tb').append(vehicleRecord);
@@ -115,7 +115,7 @@ $(document).ready(function(){
 
                 if (staff) {
                     console.log('Staff retrieved successfully:', staff);
-                    $('#txtVehicleMemberID').val(staff.staff_id);
+                    $('#txtVehicleMemberID').val(staff.staffId);
                     $('#txtVehicleFirstName').val(staff.first_name);
                     $('#txtVehicleEmail').val(staff.email);
                     $('#txtVehicleRole').val(staff.role);
@@ -147,17 +147,17 @@ $(document).ready(function(){
         var email = isAvailable ? $('#txtVehicleEmail').val() : "*--*";
 
         const vehicleData = {
-            vehicle_code:vehicle_code,
-            license_plate:license_plate,
-            fuel_type:fuel_type,
+            vehicleCode:vehicle_code,
+            plateNumber:license_plate,
+            fuelType:fuel_type,
             role:role,
             remarks:remarks,
-            vehicle_category:vehicle_category,
+            category:vehicle_category,
             status:status,
-            first_name:first_name,
-            phone_no:phone_no,
+            firstName:first_name,
+            phoneNumber:phone_no,
             email:email,
-            staff_id:staff_id
+            staffId:staff_id
         };
 
         const vehicleJSON = JSON.stringify(vehicleData);
@@ -196,24 +196,24 @@ $(document).ready(function(){
         var email = isAvailable ? $('#txtVehicleEmail').val() : "*--*";
 
         const vehicleData = {
-            vehicle_code:vehicle_code,
-            license_plate:license_plate,
-            fuel_type:fuel_type,
+            vehicleCode:vehicle_code,
+            plateNumber:license_plate,
+            fuelType:fuel_type,
             role:role,
             remarks:remarks,
-            vehicle_category:vehicle_category,
+            vehicleCategory:vehicle_category,
             status:status,
-            first_name:first_name,
-            phone_no:phone_no,
+            firstName:first_name,
+            phoneNumber:phone_no,
             email:email,
-            staff_id:staff_id
+            staffId:staff_id
         };
 
         const vehicleJSON = JSON.stringify(vehicleData);
         console.log(vehicleJSON);
 
         $.ajax({
-            url: 'http://localhost:8081/cropMonitoringSystem/api/v1/vehicles/' + vehicle_code,
+            url: 'http://localhost:8081/cropMonitoringSystem/api/v1/vehicles?vehicleCode' + vehicle_code,
             type: 'PATCH',
             data: vehicleJSON,
             contentType: 'application/json',

@@ -25,12 +25,12 @@ $(document).ready(function () {
                     res.forEach(function(field) {
                         var fieldRecord = `
                         <tr>
-                            <td class="f-id">${field.field_code}</td>
-                            <td class="f-name">${field.field_name}</td>
-                            <td class="f-location">${field.field_location}</td>
-                            <td class="f-size">${field.extent_size}</td>
-                            <td class="f-image-1"><img src="data:image/png;base64,${field.img_01}" width="150px"></td>
-                            <td class="f-image-2"><img src="data:image/png;base64,${field.img_02}" width="150px"></td>
+                            <td class="f-id">${field.fieldCode}</td>
+                            <td class="f-name">${field.fieldName}</td>
+                            <td class="f-location">${field.fieldLocation}</td>
+                            <td class="f-size">${field.size}</td>
+                            <td class="f-image-1"><image src="data:image/png;base64,${field.img_01}" width="150px"></td>
+                            <td class="f-image-2"><image src="data:image/png;base64,${field.img_02}" width="150px"></td>
                         </tr>`;
                         $('#fields-table-tb').append(fieldRecord);
                     });
@@ -65,20 +65,20 @@ $(document).ready(function () {
     });
 
     $('#save-fields').on('click', () => {
-        var fieldID = $('#txtFieldID').val();
+        var fieldCode = $('#txtFieldID').val();
         var fieldName = $('#txtFieldName').val();
         var fieldLocation = $('#txtFieldLocation').val();
-        var fieldSize = $('#txtFieldSize').val();
-        var image_01 = $('#txtFieldImage1').prop('files')[0];
-        var image_02 = $('#txtFieldImage2').prop('files')[0];
+        var size = $('#txtFieldSize').val();
+        var image1 = $('#txtFieldImage1').prop('files')[0];
+        var image2 = $('#txtFieldImage2').prop('files')[0];
 
         var fieldData = new FormData();
-        fieldData.append('fieldID', fieldID);
+        fieldData.append('fieldCode', fieldCode);
         fieldData.append('fieldName', fieldName);
+        fieldData.append('size', size);
         fieldData.append('fieldLocation', fieldLocation);
-        fieldData.append('fieldSize', fieldSize);
-        fieldData.append('image_01', image_01);
-        fieldData.append('image_02', image_02);
+        fieldData.append('image1', image1);
+        fieldData.append('image2', image2);
 
         $.ajax({
             url: 'http://localhost:8081/cropMonitoringSystem/api/v1/fields',
@@ -132,12 +132,12 @@ $(document).ready(function () {
         var image_02 = $('#txtFieldImage2').prop('files')[0];
 
         var fieldData = new FormData();
-        fieldData.append('fieldID', field_code);
+        fieldData.append('fieldCode', field_code);
         fieldData.append('fieldName', fieldName);
         fieldData.append('fieldLocation', fieldLocation);
-        fieldData.append('fieldSize', fieldSize);
-        fieldData.append('image_01', image_01);
-        fieldData.append('image_02', image_02);
+        fieldData.append('size', fieldSize);
+        fieldData.append('image1', image_01);
+        fieldData.append('image2', image_02);
 
         $.ajax({
             url: 'http://localhost:8081/cropMonitoringSystem/api/v1/fields/' + field_code,
@@ -173,7 +173,7 @@ $(document).ready(function () {
             success: (response) => {
                 console.log('Full response:', response);
                 for (let i = 0; i < response.length; i++) {
-                    if (field_code === response[i].field_code) {
+                    if (field_code === response[i].fieldCode) {
                         var field = response[i];
                         break;
                     }
@@ -182,10 +182,10 @@ $(document).ready(function () {
                 if (field) {
                     console.log('Field retrieved successfully:', field);
 
-                    $('#txtFieldID').val(field.field_code);
-                    $('#txtFieldName').val(field.field_name);
-                    $('#txtFieldLocation').val(field.field_location);
-                    $('#txtFieldSize').val(field.extent_size);
+                    $('#txtFieldID').val(field.fieldCode);
+                    $('#txtFieldName').val(field.fieldName);
+                    $('#txtFieldLocation').val(field.fieldLocation);
+                    $('#txtFieldSize').val(field.size);
                     $('#txtSearch-fields').val("");
                 } else {
                     console.error('Field not found');

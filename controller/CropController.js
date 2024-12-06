@@ -26,12 +26,12 @@ $(document).ready(function () {
                     res.forEach(function(crop) {
                         var cropRecord = `
                         <tr>
-                            <td class="c-crop_code">${crop.crop_code}</td>
-                            <td class="c-common_name">${crop.common_name}</td>
-                            <td class="c-scientific_name">${crop.scientific_name}</td>
+                            <td class="c-cropCode">${crop.cropCode}</td>
+                            <td class="c-commonName">${crop.commonName}</td>
+                            <td class="c-scientificName">${crop.scientificName}</td>
                             <td class="c-category">${crop.category}</td>
                             <td class="c-season">${crop.season}</td>
-                            <td class="c-field_code">${crop.field_code}</td>
+                            <td class="c-fieldCode">${crop.fieldCode}</td>
                             <td class="c-img"><img src="data:image/png;base64,${crop.img}" width="150px"></td>
                         </tr>`;
                         $('#crops-table-tb').append(cropRecord);
@@ -58,16 +58,16 @@ $(document).ready(function () {
     });
 
     function searchFieldsByID(query) {
-        const field_code = query.toLowerCase();
+        const fieldCode = query.toLowerCase();
 
         $.ajax({
-            url: 'http://localhost:8081/cropMonitoringSystem/api/v1/fields?fieldCode=' + field_code,
+            url: 'http://localhost:8081/cropMonitoringSystem/api/v1/fields?fieldCode=' + fieldCode,
             type: 'GET',
             dataType: 'json',
             success: (response) => {
                 console.log('Full response:', response);
                 for (let i = 0; i < response.length; i++) {
-                    if (field_code === response[i].field_code) {
+                    if (fieldCode === response[i].fieldCode) {
                         var field = response[i];
                         break;
                     }
@@ -76,8 +76,8 @@ $(document).ready(function () {
                 if (field) {
                     console.log('Field retrieved successfully:', field);
 
-                    $('#txtSearchField').val(field.field_code);
-                    $('#txtCropFieldName').val(field.field_name);
+                    $('#txtSearchField').val(field.fieldCode);
+                    $('#txtCropFieldName').val(field.fieldName);
                 } else {
                     console.error('Field not found');
                 }
@@ -91,39 +91,39 @@ $(document).ready(function () {
     $('#crops-table-tb').on('click','tr',function () {
         recordIndexCrops = $(this).index();
 
-        var crop_code = $(this).find(".c-crop_code").text();
-        var common_name = $(this).find(".c-common_name").text();
-        var scientific_name = $(this).find(".c-scientific_name").text();
+        var cropCode = $(this).find(".c-crop_code").text();
+        var commonName = $(this).find(".c-common_name").text();
+        var scientificName = $(this).find(".c-scientific_name").text();
         var category = $(this).find(".c-category").text();
         var season = $(this).find(".c-season").text();
-        var field_code = $(this).find(".c-field_code").text();
-        searchFieldsByID(field_code);
+        var fieldCode = $(this).find(".c-field_code").text();
+        searchFieldsByID(fieldCode);
 
-        $('#txtCropCode').val(crop_code);
-        $('#txtCommonName').val(common_name);
-        $('#txtScientificName').val(scientific_name);
+        $('#txtCropCode').val(cropCode);
+        $('#txtCommonName').val(commonName);
+        $('#txtScientificName').val(scientificName);
         $('#txtCategory').val(category);
         $('#txtSeason').val(season);
-        $('#txtSearchField').val(field_code);
+        $('#txtSearchField').val(fieldCode);
     });
 
     $('#save-crops').on('click', () => {
-        var crop_code = $('#txtCropCode').val();
-        var common_name = $('#txtCommonName').val();
-        var scientific_name = $('#txtScientificName').val();
+        var cropCode = $('#txtCropCode').val();
+        var commonName = $('#txtCommonName').val();
+        var scientificName = $('#txtScientificName').val();
         var category = $('#txtCategory').val();
         var img = $('#txtCropImage').prop('files')[0];
         var season = $('#txtSeason').val();
-        var field_code = $('#txtSearchField').val();
+        var fieldCode = $('#txtSearchField').val();
 
         var cropData = new FormData();
-        cropData.append('crop_code', crop_code);
-        cropData.append('common_name', common_name);
-        cropData.append('scientific_name', scientific_name);
+        cropData.append('cropCode', cropCode);
+        cropData.append('commonName', commonName);
+        cropData.append('scientificName', scientificName);
         cropData.append('category', category);
-        cropData.append('img', img);
+        cropData.append('image', img);
         cropData.append('season', season);
-        cropData.append('field_code', field_code);
+        cropData.append('fieldCode', fieldCode);
 
         $.ajax({
             url: 'http://localhost:8081/cropMonitoringSystem/api/v1/crops',
@@ -145,25 +145,25 @@ $(document).ready(function () {
     });
 
     $('#update-crops').on('click', () => {
-        var crop_code = $('#txtCropCode').val();
-        var common_name = $('#txtCommonName').val();
-        var scientific_name = $('#txtScientificName').val();
+        var cropCode = $('#txtCropCode').val();
+        var commonName = $('#txtCommonName').val();
+        var scientificName = $('#txtScientificName').val();
         var category = $('#txtCategory').val();
         var img = $('#txtCropImage').prop('files')[0];
         var season = $('#txtSeason').val();
-        var field_code = $('#txtSearchField').val();
+        var fieldCode = $('#txtSearchField').val();
 
         var cropData = new FormData();
-        cropData.append('crop_code', crop_code);
-        cropData.append('common_name', common_name);
-        cropData.append('scientific_name', scientific_name);
+        cropData.append('cropCode', cropCode);
+        cropData.append('commonName', commonName);
+        cropData.append('scientificName', scientificName);
         cropData.append('category', category);
         cropData.append('img', img);
         cropData.append('season', season);
-        cropData.append('field_code', field_code);
+        cropData.append('fieldCode', fieldCode);
 
         $.ajax({
-            url: 'http://localhost:8081/cropMonitoringSystem/api/v1/crops/' + crop_code,
+            url: 'http://localhost:8081/cropMonitoringSystem/api/v1/crops?cropCode' + cropCode,
             type: 'PATCH',
             data: cropData,
             mimeType: 'multipart/form-data',
@@ -182,16 +182,16 @@ $(document).ready(function () {
     });
 
     $('#delete-crops').on('click',() => {
-        var crop_code = $('#txtCropCode').val();
-        var common_name = $('#txtCommonName').val();
-        var scientific_name = $('#txtScientificName').val();
+        var cropCode = $('#txtCropCode').val();
+        var commonName = $('#txtCommonName').val();
+        var scientificName = $('#txtScientificName').val();
         var category = $('#txtCategory').val();
         var img = $('#txtCropImage').prop('files')[0];
         var season = $('#txtSeason').val();
-        var field_code = $('#txtSearchField').val();
+        var fieldCode = $('#txtSearchField').val();
 
         $.ajax({
-            url: 'http://localhost:8081/cropMonitoringSystem/api/v1/crops/' + crop_code,
+            url: 'http://localhost:8081/cropMonitoringSystem/api/v1/crops?cropCode' + cropCode,
             type: 'DELETE',
             success: (res) => {
                 console.log(JSON.stringify(res));
@@ -212,29 +212,29 @@ $(document).ready(function () {
     });
 
     function searchCropsByID(query) {
-        const crop_code = query.toLowerCase();
+        const cropCode = query.toLowerCase();
 
         $.ajax({
-            url: 'http://localhost:8081/cropMonitoringSystem/api/v1/crops?cropCode=' + crop_code,
+            url: 'http://localhost:8081/cropMonitoringSystem/api/v1/crops?cropCode=' + cropCode,
             type: 'GET',
             dataType: 'json',
             success: (response) => {
                 console.log('Full response:', response);
                 for (let i = 0; i < response.length; i++) {
-                    if (crop_code === response[i].crop_code) {
+                    if (cropCode === response[i].cropCode) {
                         var crop = response[i];
                         break;
                     }
                 }
 
                 if (crop) {
-                    $('#txtCropCode').val(crop.crop_code);
-                    $('#txtCommonName').val(crop.common_name);
-                    $('#txtScientificName').val(crop.scientific_name);
+                    $('#txtCropCode').val(crop.cropCode);
+                    $('#txtCommonName').val(crop.commonName);
+                    $('#txtScientificName').val(crop.scientificName);
                     $('#txtCategory').val(crop.category);
                     $('#txtSeason').val(crop.season);
-                    $('#txtSearchField').val(crop.field_code);
-                    searchFieldsByID(crop.field_code);
+                    $('#txtSearchField').val(crop.fieldCode);
+                    searchFieldsByID(crop.fieldCode);
                     $('#txtSearch-crops').val("");
                 } else {
                     console.error('Crop not found');

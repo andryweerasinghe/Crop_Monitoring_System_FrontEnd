@@ -189,17 +189,17 @@ $(document).ready(function(){
         var field_location = isAvailable ? $('#txtFieldLocation-equipment').val() : "*--*";
 
         const equipmentData = {
-            eq_code:eq_code,
+            equipmentCode:eq_code,
             name:name,
             type:type,
             status:status,
-            first_name:first_name,
+            firstName:first_name,
             role:role,
-            phone_no:phone_no,
-            field_name:field_name,
-            field_location:field_location,
-            staff_id: staff_id,
-            field_code: field_code
+            phoneNumber:phone_no,
+            fieldName:field_name,
+            fieldLocation:field_location,
+            staffId: staff_id,
+            fieldCode: field_code
         }
 
         const equipmentJson = JSON.stringify(equipmentData);
