@@ -20,7 +20,7 @@ $(document).ready(function(){
         $("#vehicles-table-tb").empty();
 
         $.ajax({
-            url: 'http://localhost:8081/greenShadow/api/v1/vehicle',
+            url: 'http://localhost:8081/cropMonitoringSystem/api/v1/vehicles',
             type: 'GET',
             dataType: 'json',
             success: function(res) {
@@ -101,7 +101,7 @@ $(document).ready(function(){
         const staff_id = query.toLowerCase();
 
         $.ajax({
-            url: 'http://localhost:8081/greenShadow/api/v1/staff?staff_id=' + staff_id,
+            url: 'http://localhost:8081/cropMonitoringSystem/api/v1/staff?id=' + staff_id,
             type: 'GET',
             dataType: 'json',
             success: (staffResponse) => {
@@ -164,7 +164,7 @@ $(document).ready(function(){
         console.log(vehicleJSON);
 
         $.ajax({
-            url: 'http://localhost:8081/greenShadow/api/v1/vehicle',
+            url: 'http://localhost:8081/cropMonitoringSystem/api/v1/vehicles',
             type: 'POST',
             data: vehicleJSON,
             contentType: 'application/json',
@@ -213,7 +213,7 @@ $(document).ready(function(){
         console.log(vehicleJSON);
 
         $.ajax({
-            url: 'http://localhost:8081/greenShadow/api/v1/vehicle/' + vehicle_code,
+            url: 'http://localhost:8081/cropMonitoringSystem/api/v1/vehicles/' + vehicle_code,
             type: 'PATCH',
             data: vehicleJSON,
             contentType: 'application/json',
@@ -243,7 +243,7 @@ $(document).ready(function(){
         var email = $('#txtVehicleEmail').val();
 
         $.ajax({
-            url: 'http://localhost:8081/greenShadow/api/v1/vehicle/' + vehicle_code,
+            url: 'http://localhost:8081/cropMonitoringSystem/api/v1/vehicles/' + vehicle_code,
             type: 'DELETE',
             success: (res) => {
                 console.log(JSON.stringify(res));
@@ -266,7 +266,7 @@ $(document).ready(function(){
     function searchVehiclesByID(query) {
         const vehicle_code = query.toLowerCase();
         $.ajax({
-            url: 'http://localhost:8081/greenShadow/api/v1/vehicle?vehicle_code=' + vehicle_code,
+            url: 'http://localhost:8081/cropMonitoringSystem/api/v1/vehicles?vehicleCode=' + vehicle_code,
             type: 'GET',
             dataType: 'json',
             success: (response) => {
